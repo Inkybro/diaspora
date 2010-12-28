@@ -6,9 +6,9 @@
 
 path=$( readlink -fn $0) && cd $(dirname $path)/.. || exit 2
 
-size=$( wc tmp/environment1 2>/dev/null) || size=0
-size=$( echo $size | cut -d' ' -f1)
-if [[ "$size" = "0"  || tmp/environment -ot config/app_config.yml ]]
+size=0
+size=$( wc tmp/environment 2>/dev/null) || :
+if [[ "${size/ */}" = "0"  || tmp/environment -ot config/app_config.yml ]]
 then
     ruby > tmp/environment << 'EOT'
         require File.join('config', 'environment.rb')
